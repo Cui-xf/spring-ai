@@ -20,6 +20,7 @@ import org.springframework.ai.chat.model.ToolContext;
 import org.springframework.ai.tool.definition.ToolDefinition;
 import org.springframework.ai.tool.metadata.ToolMetadata;
 import org.springframework.lang.Nullable;
+import reactor.core.publisher.Mono;
 
 /**
  * Represents a tool whose execution can be triggered by an AI model.
@@ -58,4 +59,11 @@ public interface ToolCallback {
 		return call(toolInput);
 	}
 
+	default Mono<String> reactiveCall(String toolInput) {
+		return Mono.just(call(toolInput));
+	}
+
+	default Mono<String> reactiveCall(String toolInput, @Nullable ToolContext toolContext) {
+		return Mono.just(call(toolInput, toolContext));
+	}
 }
